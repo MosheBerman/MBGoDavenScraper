@@ -117,14 +117,17 @@ const int kNumberOfShuls = 10000;
         
         GDShul *shul = [GDShul new];
         
+        [shul setIdentifier:identifier];
+        
         NSString *name = [[self shulNameFromPage:webpage] sanitizedString];
         NSString *address = [[self locationFromPage:webpage] sanitizedString];
-
+        NSString *phone = [self extractedPhoneFromString:webpage];
         
         if(name && address){
             
             [shul setName:name];
             [shul setAddress:address];
+            [shul setPhoneNumber:phone ? phone : @""];
             
             [[self shuls] addObject:shul];
         }
@@ -249,6 +252,26 @@ const int kNumberOfShuls = 10000;
     NSInteger minutes = (ti / 60) % 60;
     NSInteger hours = (ti / 3600);
     return [NSString stringWithFormat:@"%02li:%02li:%02li", hours, minutes, seconds];
+}
+
+- (NSString *)extractedPhoneFromString:(NSString *)string{
+    
+    if (string == nil) {
+        return nil;
+    }
+    
+    NSDataDetector *detector = [[NSDataDetector alloc] initWithTypes:NSTextCheckingTypePhoneNumber error:nil];
+    
+    NSArray *matches = [detector matchesInString:string
+                                         options:0
+                                           range:NSMakeRange(0, [string length])];
+    for (NSTextCheckingResult *match in matches) {
+        NSRange matchRange = [match range];
+
+        return [string substringWithRange:matchRange];
+    }
+    
+    return nil;
 }
 
 @end
