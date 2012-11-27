@@ -14,7 +14,7 @@
 
 @implementation GDAppDelegate
 
-const int kNumberOfShuls = 100;
+const int kNumberOfShuls = 10000;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -36,7 +36,7 @@ const int kNumberOfShuls = 100;
     NSUInteger count = [[self shuls] count];
     NSUInteger totalShuls = (NSUInteger)progress;
     
-    double percent = (double)progress/(double)totalShuls * 10.0f;
+    double percent = (double)progress/kNumberOfShuls * 100.0f;
     
     NSString *success = [NSString stringWithFormat:@"Succeeded at %li of %li URLs. (%.02f%%)", count, totalShuls, percent];
     
@@ -61,7 +61,7 @@ const int kNumberOfShuls = 100;
     //  Update the UI on the main thread
     //
     
-    dispatch_sync(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         [[self indicator] setDoubleValue:percent];
         [[self succeededLabel] setStringValue:success];
         [[self timeLabel] setStringValue:remaining];
@@ -115,12 +115,17 @@ const int kNumberOfShuls = 100;
         //  Greate a GDShul object to store our data
         //
         
-        GDShul *shul = [[GDShul alloc] init];
+        GDShul *shul = [GDShul new];
         
-        shul.name = [[self shulNameFromPage:webpage] sanitizedString];
-        shul.address = [[self locationFromPage:webpage] sanitizedString];
+        NSString *name = [[self shulNameFromPage:webpage] sanitizedString];
+        NSString *address = [[self locationFromPage:webpage] sanitizedString];
+
         
-        if(shul.address && shul.name){
+        if(name && address){
+            
+            [shul setName:name];
+            [shul setAddress:address];
+            
             [[self shuls] addObject:shul];
         }
         
@@ -128,22 +133,22 @@ const int kNumberOfShuls = 100;
         //  This method will run on the main thread
         //
         
-        [self setProgress:(double)identifier];
+        [self setProgress:(double)identifier+1];
     }
     
     //
     //  When we're done, log out the scraped data
     //
     
-    NSLog(@"Shuls: %@", [self shuls]);
-
-    
-    
     NSURL *url = [NSURL URLWithString:@"file:///Users/Moshe/Desktop/shuls.txt"];
-    if(![[self shuls] writeToURL:url atomically:YES]){
-        NSLog(@"Write failed.");
-    }
+
+    NSError *error = nil;
     
+    NSString * data = [[self shuls] componentsJoinedByString:@"\n"];
+    
+    if(![data writeToURL:url atomically:NO encoding:NSUTF16StringEncoding error:&error]){
+        NSLog(@"Write failed. %@", error);
+    }
 }
 
 - (NSString *)stringWithUrl:(NSURL *)url
