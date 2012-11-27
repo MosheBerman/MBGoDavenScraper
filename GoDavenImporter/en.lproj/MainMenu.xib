@@ -1294,11 +1294,11 @@
 				<string key="NSName">_NSMainMenu</string>
 			</object>
 			<object class="NSWindowTemplate" id="972006081">
-				<int key="NSWindowStyleMask">15</int>
+				<int key="NSWindowStyleMask">7</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{335, 390}, {480, 360}}</string>
+				<string key="NSWindowRect">{{335, 390}, {480, 70}}</string>
 				<int key="NSWTFlags">1954021376</int>
-				<string key="NSWindowTitle">GoDavenImporter</string>
+				<string key="NSWindowTitle">GoDaven Scraper</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
@@ -1312,7 +1312,6 @@
 							<string key="NSFrame">{{12, 12}, {455, 20}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<string key="NSHuggingPriority">{250, 250}</string>
 							<int key="NSpiFlags">16397</int>
@@ -1321,7 +1320,7 @@
 						<object class="NSTextField" id="521679438">
 							<reference key="NSNextResponder" ref="439893737"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{17, 333}, {85, 17}}</string>
+							<string key="NSFrame">{{17, 43}, {85, 17}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="973705388"/>
@@ -1362,7 +1361,7 @@
 						<object class="NSTextField" id="973705388">
 							<reference key="NSNextResponder" ref="439893737"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{276, 333}, {182, 17}}</string>
+							<string key="NSFrame">{{276, 43}, {182, 17}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="438977445"/>
@@ -1381,7 +1380,7 @@
 							<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 						</object>
 					</array>
-					<string key="NSFrameSize">{480, 360}</string>
+					<string key="NSFrameSize">{480, 70}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="521679438"/>
