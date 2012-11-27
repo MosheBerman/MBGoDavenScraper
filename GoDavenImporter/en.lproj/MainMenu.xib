@@ -1312,7 +1312,6 @@
 							<string key="NSFrame">{{12, 12}, {457, 20}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<string key="NSHuggingPriority">{250, 250}</string>
 							<int key="NSpiFlags">16397</int>
@@ -1395,26 +1394,6 @@
 			</object>
 			<object class="NSCustomObject" id="755631768">
 				<string key="NSClassName">NSFontManager</string>
-			</object>
-			<object class="NSWindowTemplate" id="588998125">
-				<int key="NSWindowStyleMask">8223</int>
-				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{131, 159}, {480, 270}}</string>
-				<int key="NSWTFlags">611845120</int>
-				<string key="NSWindowTitle">Window</string>
-				<string key="NSWindowClass">NSPanel</string>
-				<nil key="NSViewClass"/>
-				<nil key="NSUserInterfaceItemIdentifier"/>
-				<object class="NSView" key="NSWindowView" id="577746106">
-					<reference key="NSNextResponder"/>
-					<int key="NSvFlags">256</int>
-					<string key="NSFrameSize">{480, 270}</string>
-					<reference key="NSSuperview"/>
-					<string key="NSReuseIdentifierKey">_NS:21</string>
-				</object>
-				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
-				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
-				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -3307,19 +3286,6 @@
 						<reference key="parent" ref="973705388"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">569</int>
-						<reference key="object" ref="588998125"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="577746106"/>
-						</array>
-						<reference key="parent" ref="0"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">570</int>
-						<reference key="object" ref="577746106"/>
-						<reference key="parent" ref="588998125"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">632</int>
 						<reference key="object" ref="783691635"/>
 						<array class="NSMutableArray" key="children">
@@ -3527,10 +3493,7 @@
 				<string key="553.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="554.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="56.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="569.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="569.NSWindowTemplate.visibleAtLaunch"/>
 				<string key="57.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="570.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="58.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="NO" key="632.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="632.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3568,7 +3531,6 @@
 						<string key="indicator">NSProgressIndicator</string>
 						<string key="succeededLabel">NSTextField</string>
 						<string key="timeLabel">NSTextField</string>
-						<string key="triedLabel">NSTextField</string>
 						<string key="window">NSWindow</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -3582,10 +3544,6 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="timeLabel">
 							<string key="name">timeLabel</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="triedLabel">
-							<string key="name">triedLabel</string>
 							<string key="candidateClassName">NSTextField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="window">

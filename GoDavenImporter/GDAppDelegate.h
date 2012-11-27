@@ -13,5 +13,11 @@
 @property (assign) IBOutlet NSWindow *window;
 
 @property (nonatomic, strong) NSMutableArray *shuls;
+@property (nonatomic, strong) NSDate *startTime;
+
+@property (nonatomic, strong) IBOutlet NSProgressIndicator *indicator;
+@property (weak) IBOutlet NSTextField *timeLabel;
+@property (weak) IBOutlet NSTextField *succeededLabel;
+
 
 @end

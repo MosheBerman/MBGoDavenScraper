@@ -14,11 +14,95 @@
 
 @implementation GDAppDelegate
 
+const int kNumberOfShuls = 10000;
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    // Insert code here to initialize your application
+    
+    [self performSelectorInBackground:@selector(loadShuls) withObject:nil];
+        
+}
+
+//
+//  Updates the UI with progress information.
+//
+
+- (void) setProgress:(double)progress{
+    
+    //
+    //  Calculate the percentage
+    //
+    
+    NSUInteger count = [[self shuls] count];
+    NSUInteger totalShuls = (NSUInteger)progress;
+    
+    double percent = (double)count/(double)totalShuls;
+    
+    NSString *success = [NSString stringWithFormat:@"Succeeded at %li of %li URLs. (%.02f%%)", count, totalShuls, percent];
+    
+    //
+    //  Calculate time per shul, expected finish
+    //
+    
+    NSDate *now = [NSDate date];
+    
+    NSTimeInterval elapsedInterval = [now timeIntervalSinceDate:[self startTime]];
+    
+    NSTimeInterval timePerShul = elapsedInterval/count;
+    
+    NSTimeInterval timeExpectedToRemain = timePerShul * kNumberOfShuls;
+    
+//    NSDate *expectedFinish = [now dateByAddingTimeInterval:timeExpectedToRemain];
+    
+    NSString *timeElapsed = [self stringFromTimeInterval:elapsedInterval];
+    NSString *timeRemaining = [self stringFromTimeInterval:timeExpectedToRemain];
+    
+    NSString *remaining = [NSString stringWithFormat:@"It's been %@ since I began. I expect to finish in %@.", timeElapsed, timeRemaining];
+    
+    //
+    //  Update the UI on the main thread
+    //
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[self indicator] setDoubleValue:percent];
+        [[self succeededLabel] setStringValue:success];
+        [[self timeLabel] setStringValue:remaining];
+    });
+}
+
+//
+//  Load the shul data from GoDaven
+//
+
+- (void) loadShuls{
+    
+    //
+    //  Prepare an array to hold the shuls
+    //
+    
+    [self setShuls:[@[] mutableCopy]];
+    
+    //
+    //  Track the date
+    //
+    
+    [self setStartTime:[NSDate date]];
+    
+    //
+    //  Set up the max ID to scrape
+    //
     
     NSUInteger maxID = 100000;
+    
+    //  Prepare the indicator with the max value of 100%
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[self indicator] setMaxValue:100];
+    });
+    
+    //
+    //  Loop through all of the URLs and scrape the data
+    //
     
     for (NSUInteger identifier = 0; identifier < maxID; identifier++) {
         
@@ -29,9 +113,11 @@
         
         NSString *webpage = [self stringWithUrl:url];
         
+        //
+        //  Greate a GDShul object to store our data
+        //
         
         GDShul *shul = [[GDShul alloc] init];
-        
         
         shul.name = [[self shulNameFromPage:webpage] sanitizedString];
         shul.address = [[self locationFromPage:webpage] sanitizedString];
@@ -39,9 +125,20 @@
         if(shul.address && shul.name){
             [[self shuls] addObject:shul];
         }
+        
+        //
+        //  This method will run on the main thread
+        //
+        
+        [self setProgress:(double)identifier];
     }
     
-        NSLog(@"Shuls: %@", [self shuls]);
+    //
+    //  When we're done, log out the scraped data
+    //
+    
+    NSLog(@"Shuls: %@", [self shuls]);
+
     
 }
 
@@ -65,27 +162,18 @@
     return [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];
 }
 
+//
+//  This method extracts a shul name from the webpage
+//
+
 - (NSString *) shulNameFromPage:(NSString *)webpage{
-    
-    /*
-    if([webpage rangeOfString:@"cong-name"].location != NSNotFound){
-        
-        NSRange rangeOfOpenHeader = [webpage rangeOfString:@"<h1>"];
-        
-        NSString *afterOpen = [webpage substringFromIndex:rangeOfOpenHeader.location];
-        
-        NSRange rangeOfCloseHeader = [afterOpen rangeOfString:@"</h1>"];
-        
-        NSString *title = [webpage substringToIndex:rangeOfCloseHeader.location];
-        
-        return title;
-    }
-     */
+
     NSRange firstRange = [webpage rangeOfString:@"cong-name"];
     
     if(firstRange.location != NSNotFound){
         
         NSString *afterCongName = [webpage substringFromIndex:firstRange.location];
+        
         NSRange rangeOfOpenHeader = [afterCongName rangeOfString:@"<h1>" options:NSCaseInsensitiveSearch];
         
         NSString *shulNameBefore = [afterCongName substringFromIndex: rangeOfOpenHeader.location + rangeOfOpenHeader.length];
@@ -119,7 +207,7 @@
         //  Remove the first half of the string, until the part we want.
         //
         
-        NSString *parsedPage = [webpage substringFromIndex:rangeOfLocationSpan.location];
+        NSString *parsedPage = [webpage substringFromIndex:rangeOfLocationSpan.location+rangeOfLocationSpan.length];
         
         //
         //  Find the closing tag
@@ -144,6 +232,14 @@
     }
     
     return nil;
+}
+
+- (NSString *)stringFromTimeInterval:(NSTimeInterval)interval {
+    NSInteger ti = MAX(0,(NSInteger)interval);
+    NSInteger seconds = ti % 60;
+    NSInteger minutes = (ti / 60) % 60;
+    NSInteger hours = (ti / 3600);
+    return [NSString stringWithFormat:@"%02li:%02li:%02li", hours, minutes, seconds];
 }
 
 @end
