@@ -11,7 +11,7 @@
 @implementation GDShul
 
 - (NSString *)description{
-    return [NSString stringWithFormat:@"---- Shul #%i -----\nName: %@\nAddress: %@\nPhone:%@\n\n", self.identifier, self.name, self.address, self.phoneNumber];
+    return [NSString stringWithFormat:@"---- Shul #%li -----\nName: %@\nAddress: %@\nPhone: %@\n\n", self.identifier, self.name, self.address, self.phoneNumber];
 }
 
 @end
