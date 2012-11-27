@@ -14,7 +14,7 @@
 
 @implementation GDAppDelegate
 
-const int kNumberOfShuls = 10000;
+const int kNumberOfShuls = 100;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -36,7 +36,7 @@ const int kNumberOfShuls = 10000;
     NSUInteger count = [[self shuls] count];
     NSUInteger totalShuls = (NSUInteger)progress;
     
-    double percent = (double)count/(double)totalShuls;
+    double percent = (double)progress/(double)totalShuls * 10.0f;
     
     NSString *success = [NSString stringWithFormat:@"Succeeded at %li of %li URLs. (%.02f%%)", count, totalShuls, percent];
     
@@ -52,18 +52,16 @@ const int kNumberOfShuls = 10000;
     
     NSTimeInterval timeExpectedToRemain = timePerShul * kNumberOfShuls;
     
-//    NSDate *expectedFinish = [now dateByAddingTimeInterval:timeExpectedToRemain];
-    
     NSString *timeElapsed = [self stringFromTimeInterval:elapsedInterval];
     NSString *timeRemaining = [self stringFromTimeInterval:timeExpectedToRemain];
     
-    NSString *remaining = [NSString stringWithFormat:@"It's been %@ since I began. I expect to finish in %@.", timeElapsed, timeRemaining];
+    NSString *remaining = [NSString stringWithFormat:@"It's been %@ since I began. I expect to finish in about %@.", timeElapsed, timeRemaining];
     
     //
     //  Update the UI on the main thread
     //
     
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_sync(dispatch_get_main_queue(), ^{
         [[self indicator] setDoubleValue:percent];
         [[self succeededLabel] setStringValue:success];
         [[self timeLabel] setStringValue:remaining];
@@ -92,11 +90,11 @@ const int kNumberOfShuls = 10000;
     //  Set up the max ID to scrape
     //
     
-    NSUInteger maxID = 100000;
+    NSUInteger maxID = kNumberOfShuls;
     
     //  Prepare the indicator with the max value of 100%
     
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_sync(dispatch_get_main_queue(), ^{
         [[self indicator] setMaxValue:100];
     });
     
@@ -139,6 +137,12 @@ const int kNumberOfShuls = 10000;
     
     NSLog(@"Shuls: %@", [self shuls]);
 
+    
+    
+    NSURL *url = [NSURL URLWithString:@"file:///Users/Moshe/Desktop/shuls.txt"];
+    if(![[self shuls] writeToURL:url atomically:YES]){
+        NSLog(@"Write failed.");
+    }
     
 }
 
