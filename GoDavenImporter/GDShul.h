@@ -11,6 +11,7 @@
 @interface GDShul : NSObject
 
 @property (nonatomic, strong) NSString *name;
+@property (nonatomic, assign) NSUInteger identifier;
 @property (nonatomic, strong) NSString *address;
 
 @end
