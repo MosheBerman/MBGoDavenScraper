@@ -11,12 +11,7 @@
 @implementation GDShul
 
 - (NSString *)description{
-    return [NSString stringWithFormat:@"---- Shul -----\nName: %@, Address: %@\n\n\n", self.name, self.address];
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder{
-    [aCoder encodeObject:[self name] forKey:@"name"];
-    [aCoder encodeObject:[self address] forKey:@"address"];
+    return [NSString stringWithFormat:@"---- Shul -----\nName: %@\nAddress: %@\n\n", self.name, self.address];
 }
 
 @end

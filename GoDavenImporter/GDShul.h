@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface GDShul : NSObject <NSCoding>
+@interface GDShul : NSObject
 
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *address;
