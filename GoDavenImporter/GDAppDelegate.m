@@ -23,6 +23,10 @@ const int kNumberOfShuls = 10000;
         
 }
 
+-(void)applicationWillTerminate:(NSNotification *)notification{
+    [self save];
+}
+
 //
 //  Updates the UI with progress information.
 //
@@ -139,19 +143,7 @@ const int kNumberOfShuls = 10000;
         [self setProgress:(double)identifier+1];
     }
     
-    //
-    //  When we're done, log out the scraped data
-    //
-    
-    NSURL *url = [NSURL URLWithString:@"file:///Users/Moshe/Desktop/shuls.txt"];
-
-    NSError *error = nil;
-    
-    NSString * data = [[self shuls] componentsJoinedByString:@"\n"];
-    
-    if(![data writeToURL:url atomically:NO encoding:NSUTF16StringEncoding error:&error]){
-        NSLog(@"Write failed. %@", error);
-    }
+    [self save];
 }
 
 - (NSString *)stringWithUrl:(NSURL *)url
@@ -274,4 +266,24 @@ const int kNumberOfShuls = 10000;
     return nil;
 }
 
+
+#pragma mark - Save
+
+//
+//  Save the data to the desktop
+//
+
+- (void) save{
+    
+    NSURL *url = [NSURL URLWithString:@"file:///Users/Moshe/Desktop/shuls.txt"];
+    
+    NSError *error = nil;
+    
+    NSString * data = [[self shuls] componentsJoinedByString:@"\n"];
+    
+    if(![data writeToURL:url atomically:NO encoding:NSUTF16StringEncoding error:&error]){
+        NSLog(@"Write failed. %@", error);
+    }
+
+}
 @end
