@@ -11,12 +11,13 @@
 @implementation NSString (SanitizedString)
 
 - (NSString *) sanitizedString{
-    return [[[[[[self stringByDeletingOccurencesOfString:@"<span>"]
-                stringByDeletingOccurencesOfString:@"</span>"]
-               stringByDeletingOccurencesOfString:@"<br>"]
-              stringByDeletingOccurencesOfString:@"<p>"]
-             stringByDeletingOccurencesOfString:@"</p>"]
-            stringByDeletingOccurencesOfString:@"&nbsp;"];
+    return [[[[[[[self stringByDeletingOccurencesOfString:@"<span>"]
+                 stringByDeletingOccurencesOfString:@"</span>"]
+                stringByDeletingOccurencesOfString:@"<br>"]
+               stringByDeletingOccurencesOfString:@"<p>"]
+              stringByDeletingOccurencesOfString:@"</p>"]
+             stringByDeletingOccurencesOfString:@"&nbsp;"]
+            stringByDeletingOccurencesOfString:@"<p class=\"tel\">"];
     
 }
 
