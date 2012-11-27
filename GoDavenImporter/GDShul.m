@@ -10,4 +10,8 @@
 
 @implementation GDShul
 
+- (NSString *)description{
+    return [NSString stringWithFormat:@"---- Shul -----\nName: %@, Address: %@\n\n\n", self.name, self.address];
+}
+
 @end
