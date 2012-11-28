@@ -110,7 +110,6 @@ const int kNumberOfShuls = 10000;
         
         NSString *path =  [NSString stringWithFormat:@"http://godaven.com/detail.asp?Id=%li&City=Airmont&State=NY", identifier];
         
-        
         NSURL *url = [NSURL URLWithString:path];
         
         NSString *webpage = [self stringWithUrl:url];
@@ -133,7 +132,7 @@ const int kNumberOfShuls = 10000;
             [shul setName:name];
             [shul setAddress:address];
             [shul setPhoneNumber:phone ? phone : @""];
-            [shul setDetails:details];
+            [shul setDetails:details ? details : @""];
             [[self shuls] addObject:shul];
         }
         
@@ -239,13 +238,7 @@ const int kNumberOfShuls = 10000;
     return nil;
 }
 
-//
-//
-//
-
 - (NSString *)additionalInfoForPage:(NSString *)webpage{
-    
-//    addtlInfo
     
     //
     //  Find the location span in the page
@@ -288,9 +281,6 @@ const int kNumberOfShuls = 10000;
     }
     
     return nil;
-
-    
-    
 }
 
 //
