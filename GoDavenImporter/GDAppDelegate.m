@@ -42,7 +42,7 @@ const int kNumberOfShuls = 10000;
     
     double percent = (double)progress/kNumberOfShuls * 100.0f;
     
-    NSString *success = [NSString stringWithFormat:@"Succeeded at %li of %li URLs. (%.02f%%)", count, totalShuls, percent];
+    NSString *success = [NSString stringWithFormat:@"Succeeded at %li of %li attempted URLs. (%i total)\n %.02f%% complete)", count, totalShuls, kNumberOfShuls, percent];
     
     //
     //  Calculate time per shul, expected finish
@@ -126,13 +126,14 @@ const int kNumberOfShuls = 10000;
         NSString *name = [[self shulNameFromPage:webpage] sanitizedString];
         NSString *address = [[self locationFromPage:webpage] sanitizedString];
         NSString *phone = [self extractedPhoneFromString:webpage];
+        NSString *details = [self additionalInfoForPage:webpage];
         
         if(name && address){
             
             [shul setName:name];
             [shul setAddress:address];
             [shul setPhoneNumber:phone ? phone : @""];
-            
+            [shul setDetails:details];
             [[self shuls] addObject:shul];
         }
         
@@ -199,7 +200,7 @@ const int kNumberOfShuls = 10000;
     //  Find the location span in the page
     //
     
-    NSRange rangeOfLocationSpan = [webpage rangeOfString:@"\"loc\">"];
+    NSRange rangeOfLocationSpan = [webpage rangeOfString:@"GMAP-API\">"];
     
     //
     //  If it's there, process
@@ -217,7 +218,7 @@ const int kNumberOfShuls = 10000;
         //  Find the closing tag
         //
         
-        rangeOfLocationSpan = [parsedPage rangeOfString:@"</span>"];
+        rangeOfLocationSpan = [parsedPage rangeOfString:@"</div>"];
         
         //
         //  Remove everything after and including the closing tag.
@@ -238,6 +239,64 @@ const int kNumberOfShuls = 10000;
     return nil;
 }
 
+//
+//
+//
+
+- (NSString *)additionalInfoForPage:(NSString *)webpage{
+    
+//    addtlInfo
+    
+    //
+    //  Find the location span in the page
+    //
+    
+    NSRange rangeOfLocationSpan = [webpage rangeOfString:@"addtlInfo\">"];
+    
+    //
+    //  If it's there, process
+    //
+    
+    if(rangeOfLocationSpan.location != NSNotFound){
+        
+        //
+        //  Remove the first half of the string, until the part we want.
+        //
+        
+        NSString *parsedPage = [webpage substringFromIndex:rangeOfLocationSpan.location+rangeOfLocationSpan.length];
+        
+        //
+        //  Find the closing tag
+        //
+        
+        rangeOfLocationSpan = [parsedPage rangeOfString:@"</div>"];
+        
+        //
+        //  Remove everything after and including the closing tag.
+        //
+        
+        rangeOfLocationSpan.length = rangeOfLocationSpan.location;
+        rangeOfLocationSpan.location = 0;
+        
+        parsedPage = [[parsedPage substringWithRange:rangeOfLocationSpan] sanitizedString];
+        
+        //
+        //  Return
+        //
+        
+        return parsedPage;
+    }
+    
+    return nil;
+
+    
+    
+}
+
+//
+//  Convert a time interval into 00:00:00 format
+//
+
 - (NSString *)stringFromTimeInterval:(NSTimeInterval)interval {
     NSInteger ti = MAX(0,(NSInteger)interval);
     NSInteger seconds = ti % 60;
@@ -245,6 +304,10 @@ const int kNumberOfShuls = 10000;
     NSInteger hours = (ti / 3600);
     return [NSString stringWithFormat:@"%02li:%02li:%02li", hours, minutes, seconds];
 }
+
+//
+//  Use NSDataDetector to pull the phone number out of the webpage
+//
 
 - (NSString *)extractedPhoneFromString:(NSString *)string{
     
@@ -266,7 +329,6 @@ const int kNumberOfShuls = 10000;
     return nil;
 }
 
-
 #pragma mark - Save
 
 //
@@ -275,7 +337,7 @@ const int kNumberOfShuls = 10000;
 
 - (void) save{
     
-    NSURL *url = [NSURL URLWithString:@"file:///Users/Moshe/Desktop/shuls.txt"];
+    NSURL *url = [NSURL URLWithString:@"file:///Users/Moshe/Desktop/shuls2.txt"];
     
     NSError *error = nil;
     
