@@ -16,6 +16,8 @@
 
 const int kNumberOfShuls = 10000;
 
+const int kInitialIndex = 1527;
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     
@@ -40,9 +42,9 @@ const int kNumberOfShuls = 10000;
     NSUInteger count = [[self shuls] count];
     NSUInteger totalShuls = (NSUInteger)progress;
     
-    double percent = (double)progress/kNumberOfShuls * 100.0f;
+    double percent = (double)progress/(kNumberOfShuls-kInitialIndex) * 100.0f;
     
-    NSString *success = [NSString stringWithFormat:@"Succeeded at %li of %li attempted URLs. (%i total)\n %.02f%% complete)", count, totalShuls, kNumberOfShuls, percent];
+    NSString *success = [NSString stringWithFormat:@"Succeeded at %li of %li attempted URLs. (%i total)\n%.02f%% complete", count, totalShuls, kNumberOfShuls-kInitialIndex, percent];
     
     //
     //  Calculate time per shul, expected finish
@@ -54,7 +56,7 @@ const int kNumberOfShuls = 10000;
     
     NSTimeInterval timePerShul = elapsedInterval/count;
     
-    NSTimeInterval timeExpectedToRemain = timePerShul * kNumberOfShuls;
+    NSTimeInterval timeExpectedToRemain = timePerShul * (kNumberOfShuls -kInitialIndex - count);
     
     NSString *timeElapsed = [self stringFromTimeInterval:elapsedInterval];
     NSString *timeRemaining = [self stringFromTimeInterval:timeExpectedToRemain];
@@ -106,7 +108,7 @@ const int kNumberOfShuls = 10000;
     //  Loop through all of the URLs and scrape the data
     //
     
-    for (NSUInteger identifier = 0; identifier < maxID; identifier++) {
+    for (NSUInteger identifier = kInitialIndex; identifier < maxID; identifier++) {
         
         NSString *path =  [NSString stringWithFormat:@"http://godaven.com/detail.asp?Id=%li&City=Airmont&State=NY", identifier];
         
@@ -140,7 +142,7 @@ const int kNumberOfShuls = 10000;
         //  This method will run on the main thread
         //
         
-        [self setProgress:(double)identifier+1];
+        [self setProgress:(double)identifier+1-kInitialIndex];
     }
     
     [self save];
