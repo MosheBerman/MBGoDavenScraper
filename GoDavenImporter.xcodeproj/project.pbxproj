@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4686684616653780000F8DA6 /* GDShul.m in Sources */ = {isa = PBXBuildFile; fileRef = 4686684516653780000F8DA6 /* GDShul.m */; };
+		4686684A16653B36000F8DA6 /* NSString+SanitizedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 4686684916653B36000F8DA6 /* NSString+SanitizedString.m */; };
 		46F0A235166533F70011C4E5 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46F0A234166533F70011C4E5 /* Cocoa.framework */; };
 		46F0A23F166533F70011C4E5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 46F0A23D166533F70011C4E5 /* InfoPlist.strings */; };
 		46F0A241166533F70011C4E5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F0A240166533F70011C4E5 /* main.m */; };
@@ -30,6 +32,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4686684416653780000F8DA6 /* GDShul.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDShul.h; sourceTree = "<group>"; };
+		4686684516653780000F8DA6 /* GDShul.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDShul.m; sourceTree = "<group>"; };
+		4686684816653B36000F8DA6 /* NSString+SanitizedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SanitizedString.h"; sourceTree = "<group>"; };
+		4686684916653B36000F8DA6 /* NSString+SanitizedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SanitizedString.m"; sourceTree = "<group>"; };
 		46F0A230166533F70011C4E5 /* GoDavenImporter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoDavenImporter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46F0A234166533F70011C4E5 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		46F0A237166533F70011C4E5 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -116,6 +122,10 @@
 			children = (
 				46F0A246166533F70011C4E5 /* GDAppDelegate.h */,
 				46F0A247166533F70011C4E5 /* GDAppDelegate.m */,
+				4686684416653780000F8DA6 /* GDShul.h */,
+				4686684516653780000F8DA6 /* GDShul.m */,
+				4686684816653B36000F8DA6 /* NSString+SanitizedString.h */,
+				4686684916653B36000F8DA6 /* NSString+SanitizedString.m */,
 				46F0A249166533F70011C4E5 /* MainMenu.xib */,
 				46F0A23B166533F70011C4E5 /* Supporting Files */,
 			);
@@ -264,6 +274,8 @@
 			files = (
 				46F0A241166533F70011C4E5 /* main.m in Sources */,
 				46F0A248166533F70011C4E5 /* GDAppDelegate.m in Sources */,
+				4686684616653780000F8DA6 /* GDShul.m in Sources */,
+				4686684A16653B36000F8DA6 /* NSString+SanitizedString.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,6 +459,7 @@
 				46F0A264166533F70011C4E5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		46F0A265166533F70011C4E5 /* Build configuration list for PBXNativeTarget "GoDavenImporterTests" */ = {
 			isa = XCConfigurationList;
@@ -455,6 +468,7 @@
 				46F0A267166533F70011C4E5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
