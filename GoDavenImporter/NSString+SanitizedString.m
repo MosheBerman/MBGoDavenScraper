@@ -12,14 +12,13 @@
 
 - (NSString *) sanitizedString{
     return [[[[[[[[[self stringByDeletingOccurencesOfString:@"<span>"]
-                   stringByDeletingOccurencesOfString:@"</span>"]
-                  stringByDeletingOccurencesOfString:@"<br>"]
+                  stringByDeletingOccurencesOfString:@"</span>"]
                  stringByDeletingOccurencesOfString:@"<p>"]
                 stringByDeletingOccurencesOfString:@"</p>"]
                stringByDeletingOccurencesOfString:@"&nbsp;"]
               stringByDeletingOccurencesOfString:@"<p class=\"tel\">"]
              stringByDeletingOccurencesOfString:@"\t"]
-            stringByDeletingOccurencesOfString:@"\n"];
+            stringByDeletingOccurencesOfString:@"\n"] stringByReplacingOccurrencesOfString:@"<br>" withString:@"\n"];
     
 }
 
